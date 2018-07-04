@@ -26,6 +26,8 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:colorBackground">@color/primary_light</item>
         <item name="android:colorForeground">@color/primary_light</item>
+
+        <item name="android:actionBarSize">@dimen/toolbarSize</item>
     </style>
 
     <style name="Theme.Bacon.Detail">

@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Jul 04 07:42:34 BRT 2018
+#Wed Jul 04 09:21:23 BRT 2018
 2.base=C\:\\Users\\laris\\Documents\\Cursos\\UDACITY\\Projetos\\MaterialDesignProject\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\transforms\\dexMerger\\debug\\13
 0.path=classes.dex
 2.baseType=DIRECTORY

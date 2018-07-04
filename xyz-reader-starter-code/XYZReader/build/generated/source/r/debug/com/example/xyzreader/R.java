@@ -2793,6 +2793,7 @@ public final class R {
     public static final int notification_subtext_size=0x7f0600a4;
     public static final int notification_top_pad=0x7f0600a5;
     public static final int notification_top_pad_large_text=0x7f0600a6;
+    public static final int toolbarSize=0x7f0600a7;
   }
   public static final class drawable {
     public static final int abc_ab_share_pack_mtrl_alpha=0x7f070006;
@@ -3070,18 +3071,19 @@ public final class R {
     public static final int title=0x7f09009b;
     public static final int titleDividerNoCustom=0x7f09009c;
     public static final int title_template=0x7f09009d;
-    public static final int top=0x7f09009e;
-    public static final int topPanel=0x7f09009f;
-    public static final int touch_outside=0x7f0900a0;
-    public static final int transition_current_scene=0x7f0900a1;
-    public static final int transition_scene_layoutid_cache=0x7f0900a2;
-    public static final int up=0x7f0900a3;
-    public static final int up_container=0x7f0900a4;
-    public static final int useLogo=0x7f0900a5;
-    public static final int view_offset_helper=0x7f0900a6;
-    public static final int visible=0x7f0900a7;
-    public static final int withText=0x7f0900a8;
-    public static final int wrap_content=0x7f0900a9;
+    public static final int toolbar=0x7f09009e;
+    public static final int top=0x7f09009f;
+    public static final int topPanel=0x7f0900a0;
+    public static final int touch_outside=0x7f0900a1;
+    public static final int transition_current_scene=0x7f0900a2;
+    public static final int transition_scene_layoutid_cache=0x7f0900a3;
+    public static final int up=0x7f0900a4;
+    public static final int up_container=0x7f0900a5;
+    public static final int useLogo=0x7f0900a6;
+    public static final int view_offset_helper=0x7f0900a7;
+    public static final int visible=0x7f0900a8;
+    public static final int withText=0x7f0900a9;
+    public static final int wrap_content=0x7f0900aa;
   }
   public static final class integer {
     public static final int abc_config_activityDefaultDur=0x7f0a0000;

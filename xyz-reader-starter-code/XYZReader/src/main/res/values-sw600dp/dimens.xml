@@ -20,6 +20,9 @@
 
     <!-- AppBarLayout -->
     <dimen name="appBarSize">128dp</dimen>
-    <dimen name="appBarStarMargin">72dp</dimen>
-    <dimen name="appBarBottomMargin">28dp</dimen>
+    <dimen name="appBarStarMargin">16dp</dimen>
+    <dimen name="appBarBottomMargin">16dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbarSize">64dp</dimen>
 </resources>
