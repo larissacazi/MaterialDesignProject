@@ -34,23 +34,21 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file leaf-file-name="activity_article_list.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/XYZReader/src/main/res/layout/activity_article_list.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="49" lean-forward="true" selection-start-line="9" selection-start-column="49" selection-end-line="11" selection-end-column="40" />
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="29" column="48" lean-forward="false" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
               <folding>
-                <element signature="e#445#464#0" expanded="true" />
-                <element signature="e#601#625#0" expanded="true" />
-                <element signature="e#1123#1150#0" expanded="true" />
-                <element signature="e#1190#1215#0" expanded="true" />
-                <element signature="e#1256#1283#0" expanded="true" />
-                <element signature="e#1323#1341#0" expanded="true" />
-                <element signature="e#1750#1783#0" expanded="true" />
-                <element signature="e#2008#2033#0" expanded="true" />
-                <element signature="e#2067#2092#0" expanded="true" />
+                <element signature="e#488#512#0" expanded="true" />
+                <element signature="e#709#736#0" expanded="true" />
+                <element signature="e#776#801#0" expanded="true" />
+                <element signature="e#842#869#0" expanded="true" />
+                <element signature="e#909#927#0" expanded="true" />
+                <element signature="e#1532#1557#0" expanded="true" />
+                <element signature="e#1591#1616#0" expanded="true" />
               </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer2">
+          <provider selected="true" editor-type-id="android-designer2">
             <state />
           </provider>
         </entry>
@@ -2577,15 +2575,13 @@
         <state relative-caret-position="252">
           <caret line="12" column="54" lean-forward="true" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
           <folding>
-            <element signature="e#445#464#0" expanded="true" />
-            <element signature="e#601#625#0" expanded="true" />
-            <element signature="e#1123#1150#0" expanded="true" />
-            <element signature="e#1190#1215#0" expanded="true" />
-            <element signature="e#1256#1283#0" expanded="true" />
-            <element signature="e#1323#1341#0" expanded="true" />
-            <element signature="e#1750#1783#0" expanded="true" />
-            <element signature="e#2008#2033#0" expanded="true" />
-            <element signature="e#2067#2092#0" expanded="true" />
+            <element signature="e#488#512#0" expanded="true" />
+            <element signature="e#709#736#0" expanded="true" />
+            <element signature="e#776#801#0" expanded="true" />
+            <element signature="e#842#869#0" expanded="true" />
+            <element signature="e#909#927#0" expanded="true" />
+            <element signature="e#1532#1557#0" expanded="true" />
+            <element signature="e#1591#1616#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2891,23 +2887,21 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/XYZReader/src/main/res/layout/activity_article_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="49" lean-forward="true" selection-start-line="9" selection-start-column="49" selection-end-line="11" selection-end-column="40" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="29" column="48" lean-forward="false" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
           <folding>
-            <element signature="e#445#464#0" expanded="true" />
-            <element signature="e#601#625#0" expanded="true" />
-            <element signature="e#1123#1150#0" expanded="true" />
-            <element signature="e#1190#1215#0" expanded="true" />
-            <element signature="e#1256#1283#0" expanded="true" />
-            <element signature="e#1323#1341#0" expanded="true" />
-            <element signature="e#1750#1783#0" expanded="true" />
-            <element signature="e#2008#2033#0" expanded="true" />
-            <element signature="e#2067#2092#0" expanded="true" />
+            <element signature="e#488#512#0" expanded="true" />
+            <element signature="e#709#736#0" expanded="true" />
+            <element signature="e#776#801#0" expanded="true" />
+            <element signature="e#842#869#0" expanded="true" />
+            <element signature="e#909#927#0" expanded="true" />
+            <element signature="e#1532#1557#0" expanded="true" />
+            <element signature="e#1591#1616#0" expanded="true" />
           </folding>
         </state>
       </provider>
-      <provider editor-type-id="android-designer2">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>

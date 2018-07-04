@@ -7,28 +7,18 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/appBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:fitsSystemWindows="true"
+        android:layout_height="?actionBarSize"
         android:elevation="@dimen/appBarElevation">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/logo"
-            android:layout_gravity="bottom"
             android:layout_marginTop="@dimen/appBarBottomMargin"
             android:layout_marginStart="@dimen/appBarStarMargin"
             android:layout_marginBottom="@dimen/appBarBottomMargin"
             android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:fitsSystemWindows="true"/>
+            android:scaleType="centerCrop"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -37,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarStyle="insideOverlay"
-        android:layout_marginTop="@dimen/recyclerView_top_padding" >
+        android:layout_marginTop="?actionBarSize" >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
