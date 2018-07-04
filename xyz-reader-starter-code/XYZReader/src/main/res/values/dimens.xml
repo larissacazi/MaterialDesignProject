@@ -34,4 +34,13 @@
     <!-- Card -->
     <dimen name="card_elevation">8dp</dimen>
     <dimen name="card_margin">4dp</dimen>
+
+    <!-- Image View -->
+    <dimen name="image_view_height">100dp</dimen>
+
+    <!-- Title -->
+    <dimen name="title_top_margin">16dp</dimen>
+    <dimen name="title_bottom_margin">8dp</dimen>
+    <dimen name="title_start_margin">16dp</dimen>
+    <dimen name="title_end_margin">16dp</dimen>
 </resources>
