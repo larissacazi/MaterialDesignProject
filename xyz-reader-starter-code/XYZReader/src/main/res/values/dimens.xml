@@ -30,4 +30,8 @@
     <!-- RecyclerView -->
     <dimen name="recyclerView_top_padding">110dp</dimen>
     <dimen name="recylcerView_bottom_margin">28dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
 </resources>

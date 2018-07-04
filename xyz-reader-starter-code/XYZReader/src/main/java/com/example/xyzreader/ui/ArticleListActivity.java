@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,11 +8,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -29,10 +37,18 @@ import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * An activity representing a list of Articles. This activity has different presentations for
@@ -182,28 +198,112 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
                         + "<br/>" + " by "
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
+
+            String url = mCursor.getString(ArticleLoader.Query.THUMB_URL);
+            holder.thumbnailView.setImageUrl(url,
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+            createPalette(holder, url);
         }
 
         @Override
         public int getItemCount() {
             return mCursor.getCount();
         }
+
+        private void createPalette(final ViewHolder holder, final String url) {
+
+            Bitmap image = null;
+
+            @SuppressLint("StaticFieldLeak") AsyncTask asyncTask = new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(Void... voids) {
+                    Bitmap bitmap = null;
+                    Palette palette = null;
+                    URL imageUrl = null;
+                    try {
+                        imageUrl = new URL(url);
+                        bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+
+                        if(bitmap != null) {
+                            palette = Palette.from(bitmap).generate();
+                            if(palette != null) {
+                                HashMap map = processPalette(palette);
+                                Palette.Swatch vibrantSwatch = (Palette.Swatch) getColor(map);
+                                if(vibrantSwatch != null) {
+                                    //ColorDrawable vibrantColor = new ColorDrawable(vibrantSwatch.getBodyTextColor());
+                                    holder.cardView.setCardBackgroundColor(vibrantSwatch.getBodyTextColor());
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return bitmap;
+                }
+            }.execute();
+        }
+
+        HashMap<String, Palette.Swatch> processPalette(Palette p) {
+            HashMap<String, Palette.Swatch> map = new HashMap<>();
+
+            if (p.getVibrantSwatch() != null)
+                map.put("Vibrant", p.getVibrantSwatch());
+            if (p.getDarkVibrantSwatch() != null)
+                map.put("DarkVibrant", p.getDarkVibrantSwatch());
+            if (p.getLightVibrantSwatch() != null)
+                map.put("LightVibrant", p.getLightVibrantSwatch());
+
+            if (p.getMutedSwatch() != null)
+                map.put("Muted", p.getMutedSwatch());
+            if (p.getDarkMutedSwatch() != null)
+                map.put("DarkMuted", p.getDarkMutedSwatch());
+            if (p.getLightMutedSwatch() != null)
+                map.put("LightMuted", p.getLightMutedSwatch());
+
+            return map;
+        }
+
+        Palette.Swatch getColor(HashMap map) {
+            if(map.containsKey("Vibrant")) {
+                return (Palette.Swatch) map.get("Vibrant");
+            }
+            if(map.containsKey("DarkVibrant")) {
+                return (Palette.Swatch) map.get("DarkVibrant");
+            }
+            if(map.containsKey("LightVibrant")) {
+                return (Palette.Swatch) map.get("LightVibrant");
+            }
+            if(map.containsKey("LightMuted")) {
+                return (Palette.Swatch) map.get("LightMuted");
+            }
+
+            if(map.containsKey("Muted")) {
+                return (Palette.Swatch) map.get("Muted");
+            }
+            if(map.containsKey("DarkMuted")) {
+                return (Palette.Swatch) map.get("DarkMuted");
+            }
+
+            return null;
+        }
+
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public DynamicHeightNetworkImageView thumbnailView;
         public TextView titleView;
         public TextView subtitleView;
+        public CardView cardView;
 
         public ViewHolder(View view) {
             super(view);
             thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            cardView = (CardView) view.findViewById(R.id.card_view);
         }
     }
 }
