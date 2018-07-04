@@ -1,0 +1,4 @@
+#Wed Jul 04 08:15:13 BRT 2018
+base.0=C\:\\Users\\laris\\Documents\\Cursos\\UDACITY\\Projetos\\MaterialDesignProject\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

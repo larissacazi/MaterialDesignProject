@@ -1,0 +1,55 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\laris\\Documents\\Cursos\\UDACITY\\Projetos\\MaterialDesignProject\\xyz-reader-starter-code\\XYZReader\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\laris\\Documents\\Cursos\\UDACITY\\Projetos\\MaterialDesignProject\\xyz-reader-starter-code\\XYZReader\\src\\main\\res\\values-land\\macro_layout.xml",
+                    "from": {
+                        "startLines": "3,2",
+                        "startColumns": "4,4",
+                        "startOffsets": "88,36",
+                        "endColumns": "57,51",
+                        "endOffsets": "141,83"
+                    },
+                    "to": {
+                        "startLines": "6,7",
+                        "startColumns": "4,4",
+                        "startOffsets": "328,386",
+                        "endColumns": "57,51",
+                        "endOffsets": "381,433"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\laris\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-25.3.0.aar\\b97dab1cb9eb6797ac098c21f634f9c6\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,125,189,260",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "120,184,255,323"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\laris\\.gradle\\caches\\transforms-1\\files-1.1\\design-25.3.0.aar\\30970271292c37e0d0e4f170b4881798\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "232"
+                    },
+                    "to": {
+                        "startLines": "8",
+                        "startColumns": "4",
+                        "startOffsets": "438",
+                        "endLines": "11",
+                        "endColumns": "12",
+                        "endOffsets": "615"
+                    }
+                }
+            ]
+        }
+    ]
+}
