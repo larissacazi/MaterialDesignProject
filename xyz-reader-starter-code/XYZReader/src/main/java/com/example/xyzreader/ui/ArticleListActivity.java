@@ -58,9 +58,7 @@ public class ArticleListActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        //appBarLayout = (AppBarLayout)findViewById(R.id.appBar);
-
-       // final View toolbarContainerView = findViewById(R.id.toolbar_container);
+        appBarLayout = (AppBarLayout)findViewById(R.id.appBarLayout);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 

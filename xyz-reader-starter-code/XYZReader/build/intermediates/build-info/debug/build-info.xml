@@ -5,40 +5,56 @@
     build-mode="COLD"
     density="xxhdpi"
     format="10"
+    ir-eligibility="R_CLASS_CHANGE"
     plugin-version="3.1.2"
-    timestamp="1530706879173"
+    timestamp="1530711554340"
     token="2494855696028608054"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="1235" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="157" />
     <task
         name="verifier"
-        duration="0" />
+        duration="118" />
 
+    <artifact
+        location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_3.apk"
+        type="SPLIT" />
     <artifact
         location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\instant-run-apk\debug\XYZReader-debug.apk"
         type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1530704632183"
+        timestamp="1530707304504"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_0.apk"
@@ -71,34 +87,23 @@
     <build
         build-mode="COLD"
         ir-eligibility="R_CLASS_CHANGE"
-        timestamp="1530705774953"
+        timestamp="1530711554340"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
-            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_0.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="R_CLASS_CHANGE"
-        timestamp="1530706733721"
-        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1530706879173"
-        verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\laris\Documents\Cursos\UDACITY\Projetos\MaterialDesignProject\xyz-reader-starter-code\XYZReader\build\intermediates\instant-run-apk\debug\XYZReader-debug.apk"
             type="SPLIT_MAIN" />

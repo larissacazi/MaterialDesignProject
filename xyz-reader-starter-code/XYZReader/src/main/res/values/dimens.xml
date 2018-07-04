@@ -22,7 +22,12 @@
     <dimen name="appBarSize">128dp</dimen>
     <dimen name="appBarStarMargin">16dp</dimen>
     <dimen name="appBarBottomMargin">16dp</dimen>
+    <dimen name="appBarElevation">4dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbarSize">56dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="recyclerView_top_padding">110dp</dimen>
+    <dimen name="recylcerView_bottom_margin">28dp</dimen>
 </resources>
