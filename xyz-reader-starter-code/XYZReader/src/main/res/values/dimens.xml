@@ -22,12 +22,14 @@
     <dimen name="appBarSize">128dp</dimen>
     <dimen name="appBarStarMargin">16dp</dimen>
     <dimen name="appBarBottomMargin">16dp</dimen>
+    <dimen name="image_margin">4dp</dimen>
     <dimen name="appBarElevation">4dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbarSize">64dp</dimen>
 
     <!-- RecyclerView -->
+    <dimen name="recyclerView_padding">4dp</dimen>
     <dimen name="recyclerView_top_padding">110dp</dimen>
     <dimen name="recylcerView_bottom_margin">28dp</dimen>
 
@@ -40,7 +42,17 @@
 
     <!-- Title -->
     <dimen name="title_top_margin">16dp</dimen>
-    <dimen name="title_bottom_margin">8dp</dimen>
+    <dimen name="title_bottom_margin">16dp</dimen>
     <dimen name="title_start_margin">16dp</dimen>
     <dimen name="title_end_margin">16dp</dimen>
+
+    <!-- Articles's details -->
+    <dimen name="appBarLayout_image_height">340dp</dimen>
+    <dimen name="collapsing_toolbar_title_margin_end">64dp</dimen>
+    <dimen name="collapsing_toolbar_title_margin_start">48dp</dimen>
+    <dimen name="linear_bar_padding">16dp</dimen>
+    <dimen name="detail_content_text">16dp</dimen>
+    <dimen name="detail_vertical_margin">16dp</dimen>
+
+    <integer name="fragment_details_background_image_fade_millis">1000</integer>
 </resources>

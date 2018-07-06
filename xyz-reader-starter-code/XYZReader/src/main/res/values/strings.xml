@@ -8,5 +8,8 @@
     <string name="action_share">Share</string>
 
     <string name="up">Up</string>
+    <string name="book_image">book_image</string>
+    <string name="book_image_display">Display Book\'s cover</string>
+    <string name="empty_recycler_view_no_network">No Network Connection</string>
 
 </resources>

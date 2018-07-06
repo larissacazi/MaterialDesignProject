@@ -1,56 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/card_margin"
-    android:layout_marginRight="@dimen/card_margin"
-    android:layout_marginTop="@dimen/card_margin"
-    android:layout_marginBottom="@dimen/card_margin"
+    xmlns:card="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/card_margin"
+    card:elevation="@dimen/card_elevation"
     app:cardElevation="@dimen/card_elevation"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    android:id="@+id/card_view">
+    android:id="@+id/card_view"
+    android:foreground="?selectableItemBackground">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="?colorPrimary">
-
-        <!--suppress AndroidLintContentDescription -->
-        <com.example.xyzreader.ui.DynamicHeightNetworkImageView
-            android:id="@+id/image_view_back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/thumbnail"
-            app:layout_constraintTop_toTopOf="@+id/thumbnail"
-            android:scaleType="matrix"
-            android:background="?selectableItemBackground"/>
+        android:orientation="vertical">
 
         <com.example.xyzreader.ui.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
-            android:background="?selectableItemBackground" />
+            android:layout_height="0dp"
+            android:background="?colorPrimary"/>
 
         <TextView
             android:id="@+id/article_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/title_top_margin"
-            android:ellipsize="end"
             android:typeface="sans"
             android:fontFamily="@font/worksanssemibold"
-            android:maxLines="4"
-            android:paddingBottom="@dimen/title_bottom_margin"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:paddingEnd="@dimen/title_end_margin"
             android:paddingStart="@dimen/title_start_margin"
+            android:paddingTop="@dimen/title_top_margin"
             android:textColor="@color/icons"
-            android:textSize="@dimen/card_view_subtitle1"
-            app:layout_constraintTop_toBottomOf="@+id/thumbnail" />
+            style="@style/TextAppearance.AppCompat.Subhead"/>
 
-    </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/article_subtitle"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/title_end_margin"
+            android:paddingStart="@dimen/title_start_margin"
+            android:textColor="@color/primary_light"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/article_author"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/title_end_margin"
+            android:paddingStart="@dimen/title_start_margin"
+            android:paddingBottom="@dimen/title_bottom_margin"
+            android:textColor="@color/primary_light"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
