@@ -91,7 +91,8 @@
                 android:id="@+id/body_progress_bar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/progressBarMargin"/>
             <TextView
                 android:id="@+id/article_body"
                 style="?android:attr/textAppearanceMedium"
