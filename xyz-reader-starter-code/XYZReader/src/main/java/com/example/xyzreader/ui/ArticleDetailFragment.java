@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -57,7 +59,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     private int mMutedColor = MUTED_COLOR;
     private int mTopInset;
     private int mCurrentPosition;
-    private int mStartingPosition;
     private boolean mIsTransitioning;
     private long mBackgroundImageFadeMillis;
 
@@ -82,7 +83,16 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     Toolbar detailToolbar;
     @BindView(R.id.article_body)
     TextView bodyView;
-    private boolean mIsCard = false;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+                case ARTICLE_TEXT_VIEW:
+                    bodyView.setText(msg.obj.toString()); // set text with Message data
+                    break;
+            }
+        }
+    };
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -110,17 +120,14 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
-        mStartingPosition = getArguments().getInt(STARTING_ARTICLE_POSITION);
         mCurrentPosition = getArguments().getInt(CURRENT_ARTICLE_POSITION);
-        mIsTransitioning = savedInstanceState == null && mStartingPosition == mCurrentPosition;
-        mBackgroundImageFadeMillis = getResources().getInteger(
-                R.integer.fragment_details_background_image_fade_millis);
+        mIsTransitioning = savedInstanceState == null;
+        mBackgroundImageFadeMillis = getResources().getInteger(R.integer.fragment_details_background_image_fade_millis);
 
         if (Build.VERSION.SDK_INT >= 21) {
             getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
         setHasOptionsMenu(true);
     }
 
@@ -145,35 +152,40 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
     }
 
     public void startPostponedEnterTransition() {
-        if (mCurrentPosition == mStartingPosition) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            getActivity().startPostponedEnterTransition();
-                        }
-                        return true;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPhotoView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    mPhotoView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getActivity().startPostponedEnterTransition();
                     }
-                });
-            }
+                    return true;
+                }
+            });
         }
-
     }
 
 
     private void bindViews() {
-        if (mRootView == null) {
-            return;
-        }
+        if(mRootView == null) return;
 
         bylineView.setMovementMethod(new LinkMovementMethod());
 
-        if (mCursor != null) {
+        if(mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
+
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // use handler to send message to run on UI thread.
+                    mHandler.sendMessage(mHandler.obtainMessage(ARTICLE_TEXT_VIEW, Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY))));
+                }
+
+            });
+            t.start();
 
             String photo = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
             final String title = mCursor.getString(ArticleLoader.Query.TITLE);
@@ -184,11 +196,14 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                             DateUtils.FORMAT_ABBREV_ALL).toString()
                             + " by "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR)).toString();
-            final String body = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)).toString();
+            //final String body = Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)).toString();
+
+
             titleView.setText(title);
             bylineView.setText(time);
             mPhotoView.setContentDescription(title + time);
-            bodyView.setText(body);
+
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mPhotoView.setTransitionName(getString(R.string.book_image) + String.valueOf(mCurrentPosition));
             }
@@ -197,7 +212,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                 public void onClick(View view) {
                     startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                             .setType("text/plain")
-                            .setText(title + "/n" + time + "/n" + body)
+                            .setText(getString(R.string.action_share))
                             .getIntent(), getString(R.string.action_share)));
                 }
             });

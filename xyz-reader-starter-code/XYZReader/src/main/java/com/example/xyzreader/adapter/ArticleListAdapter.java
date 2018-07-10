@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -19,18 +20,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.ExecutorDelivery;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
+import com.example.xyzreader.ui.ArticleDetailActivity;
+import com.example.xyzreader.ui.ArticleListActivity;
 import com.example.xyzreader.ui.DynamicHeightNetworkImageView;
 import com.example.xyzreader.ui.ImageLoaderHelper;
 import com.example.xyzreader.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +46,6 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     private Cursor mCursor;
     private Context mContext;
     private int mResource;
-    private int mPosition;
 
     public ArticleListAdapter(Cursor cursor, Context context, int resource) {
         mCursor = cursor;
@@ -55,7 +60,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     }
 
     @Override
-    public ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ArticleViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(mResource, parent, false);
 
 
@@ -65,16 +70,18 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                mPosition = vh.getAdapterPosition();
+                int position = vh.getAdapterPosition();
                 ActivityOptionsCompat activityOptionsCompat
                         = ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 (Activity) mContext,
                                 vh.thumbnailView,
                                 vh.thumbnailView.getTransitionName());
 
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
-                intent.putExtra(Utils.STARTING_ARTICLE_POSITION, mPosition);
+                //Intent intent = new Intent(Intent.ACTION_VIEW,
+                //        ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                Intent intent = new Intent(mContext, ArticleDetailActivity.class);
+                intent.putExtra(Utils.CURRENT_ARTICLE_POSITION, position);
+                intent.putExtra(Utils.CURRENT_ARTICLE_TRANSITION_NAME, vh.thumbnailView.getTransitionName());
                 mContext.startActivity(intent, activityOptionsCompat.toBundle());
             }
         });
@@ -85,20 +92,36 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ArticleViewHolder holder, int position) {
         mCursor.moveToPosition(position);
-        mPosition = position;
-
         //Setting Transition Name and Tag
         holder.thumbnailView.setTransitionName(mContext.getString(R.string.book_image) + position);
         holder.thumbnailView.setTag(mContext.getString(R.string.book_image) + position);
 
-        //Getting from DB
+        //Getting Data from DB
         String title = mCursor.getString(ArticleLoader.Query.TITLE);
         String subtitle = DateUtils.getRelativeTimeSpanString(
                 mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                 DateUtils.FORMAT_ABBREV_ALL).toString();
         String author = mCursor.getString(ArticleLoader.Query.AUTHOR);
-        String image = mCursor.getString(ArticleLoader.Query.THUMB_URL);
+        final String image = mCursor.getString(ArticleLoader.Query.THUMB_URL);
+
+        try {
+            holder.bitmap = new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(Void... params) {
+                    try {
+
+                        return Picasso.get().load(image)
+                                .get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            }.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Setting fields
         holder.titleView.setText(title);
@@ -116,12 +139,6 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
                 if(bitmap != null) {
                     Palette p = Palette.from(bitmap).generate();
                     int mMutedColor = p.getDarkVibrantColor(Utils.DEFAULT_COLOR);
-                    if(mMutedColor == Utils.DEFAULT_COLOR) {
-                        mMutedColor = p.getLightVibrantColor(Utils.DEFAULT_COLOR);
-                        if(mMutedColor == Utils.DEFAULT_COLOR) {
-                            mMutedColor = p.getVibrantColor(Utils.DEFAULT_COLOR);
-                        }
-                    }
                     holder.itemView.setBackgroundColor(mMutedColor);
                     holder.thumbnailView.setBackgroundColor(mMutedColor);
                 }
@@ -146,6 +163,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         @BindView(R.id.article_subtitle) TextView subtitleView;
         @BindView(R.id.article_author) TextView authorView;
         @BindView(R.id.card_view) CardView cardView;
+        Bitmap bitmap = null;
 
         public ArticleViewHolder(View view) {
             super(view);

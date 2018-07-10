@@ -1,30 +1,32 @@
 package com.example.xyzreader.ui;
 
-import android.app.SharedElementCallback;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.data.ItemsContract;
-
-import java.util.List;
-import java.util.Map;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,78 +40,56 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     private Cursor mCursor;
     private long mStartId;
 
-    @BindView(R.id.pager)
-    ViewPager mPager;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView mScrollView;
+    @BindView(R.id.article_image_container)
+    View mPhotoContainerView;
+    @BindView(R.id.thumbnail)
+    ImageView mPhotoView;
+    @Nullable
+    @BindView(R.id.article_app_bar)
+    AppBarLayout parallaxBar;
+    @BindView(R.id.share_fab)
+    FloatingActionButton mShareFab;
+    @BindView(R.id.meta_bar)
+    LinearLayout metaBar;
+    @BindView(R.id.article_title)
+    TextView titleView;
+    @BindView(R.id.article_byline)
+    TextView bylineView;
+    @BindView(R.id.article_detail_toolbar)
+    Toolbar detailToolbar;
+    @BindView(R.id.article_body)
+    TextView bodyView;
+    @BindView(R.id.body_progress_bar)
+    ProgressBar loadingBody;
 
-    private MyPagerAdapter mPagerAdapter;
-    private ArticleDetailFragment mCurrentDetailsFragment;
-    private boolean mIsReturning;
+
     private int mCurrentPosition;
-    private int mStartingPosition;
+    private String mCurrentImageTransitionName;
 
-    private final SharedElementCallback mCallback = new SharedElementCallback() {
-        @Override
-        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-            if(mIsReturning) {
-                ImageView sharedElement = mCurrentDetailsFragment.getAlbumImage();
-                if (sharedElement == null) {
-                    // If shared element is null, then it has been scrolled off screen and
-                    // no longer visible. In this case we cancel the shared element transition by
-                    // removing the shared element from the shared elements map.
-                    names.clear();
-                    sharedElements.clear();
-                } else if (mStartingPosition != mCurrentPosition) {
-                    // If the user has swiped to a different ViewPager page, then we need to
-                    // remove the old shared element and replace it with the new shared element
-                    // that should be transitioned instead.
-                    names.clear();
-                    names.add(sharedElement.getTransitionName());
-                    sharedElements.clear();
-                    sharedElements.put(sharedElement.getTransitionName(), sharedElement);
-                }
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
-        ButterKnife.bind(this);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            postponeEnterTransition();
-            setEnterSharedElementCallback(mCallback);
-        }
-
-        mStartingPosition = getIntent().getIntExtra(STARTING_ARTICLE_POSITION, 0);
-        if (savedInstanceState == null) {
-            if (getIntent() != null && getIntent().getData() != null) {
-                mStartId = ItemsContract.Items.getItemId(getIntent().getData());
-            }
-            mCurrentPosition = mStartingPosition;
-        }else{
-            mStartId = savedInstanceState.getLong(ARTICLE_ID);
-            mCurrentPosition = savedInstanceState.getInt(CURRENT_ARTICLE_POSITION);
-        }
+        supportPostponeEnterTransition();
 
         getSupportLoaderManager().initLoader(0, null, this);
 
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(mCurrentPosition);
-        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                if (mCursor != null) {
-                    mCursor.moveToPosition(position);
-                    mCurrentPosition = position;
-                }
-            }
-        });
+        ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(CURRENT_ARTICLE_POSITION)) {
+            mCurrentPosition = intent.getIntExtra(CURRENT_ARTICLE_POSITION, 0);
+            mCurrentImageTransitionName = intent.getStringExtra(CURRENT_ARTICLE_TRANSITION_NAME);
+        }
+        else finish();
+
+        mPhotoView.setTransitionName(mCurrentImageTransitionName);
+        loadingBody.setVisibility(View.VISIBLE);
+        bodyView.setVisibility(View.GONE);
     }
 
     @Override
@@ -120,10 +100,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     }
 
     @Override
-    public void finishAfterTransition() {
-        mIsReturning = true;
+    public void finishAfterTransition() {;
         Intent data = new Intent();
-        data.putExtra(STARTING_ARTICLE_POSITION, mStartingPosition);
         data.putExtra(CURRENT_ARTICLE_POSITION, mCurrentPosition);
         setResult(RESULT_OK, data);
         super.finishAfterTransition();
@@ -135,52 +113,90 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> cursorLoader, final Cursor cursor) {
         // Select the start ID
-        if (mStartId > 0) {
+        /*if (mStartId > 0) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 if (cursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                     final int position = cursor.getPosition();
                     mCursor = cursor;
-                    mPagerAdapter.notifyDataSetChanged();
-                    mPager.setCurrentItem(position, false);
                     break;
                 }
                 cursor.moveToNext();
             }
+
+        }*/
+        if(cursor == null || cursor.isClosed() || !cursor.moveToFirst()) {
+            return;
         }
+
+        cursor.moveToPosition(mCurrentPosition);
+
+        final String title = cursor.getString(ArticleLoader.Query.TITLE);
+
+        String author = Html.fromHtml(
+                DateUtils.getRelativeTimeSpanString(
+                        cursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString()
+                        + " by "
+                        + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
+                bodyView.setText(body);
+                bodyView.setVisibility(View.VISIBLE);
+                loadingBody.setVisibility(View.GONE);
+                return null;
+            }
+        }.execute();
+
+        String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
+
+        if(detailToolbar != null){
+            detailToolbar.setTitle(title);
+            detailToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+            detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+
+        titleView.setText(title);
+        bylineView.setText(author);
+        Picasso.get().load(photo)
+                .into(mPhotoView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        supportStartPostponedEnterTransition();
+                    }
+                });;
+
+        mShareFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from((Activity) getApplicationContext())
+                        .setType("text/plain")
+                        .setText(getString(R.string.action_share))
+                        .getIntent(), getString(R.string.action_share)));
+            }
+        });
+
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mCursor = null;
-        mPagerAdapter.notifyDataSetChanged();
-    }
-
-
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            mCursor.moveToPosition(position);
-            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID), position, mStartingPosition);
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            mCurrentDetailsFragment = (ArticleDetailFragment) object;
-        }
-
-        @Override
-        public int getCount() {
-            return (mCursor != null) ? mCursor.getCount() : 0;
-        }
     }
 }
 
