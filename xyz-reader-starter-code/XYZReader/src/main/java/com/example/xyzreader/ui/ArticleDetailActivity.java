@@ -51,8 +51,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     AppBarLayout parallaxBar;
     @BindView(R.id.share_fab)
     FloatingActionButton mShareFab;
-    @BindView(R.id.meta_bar)
-    LinearLayout metaBar;
     @BindView(R.id.article_title)
     TextView titleView;
     @BindView(R.id.article_byline)
@@ -157,18 +155,19 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
         if(detailToolbar != null){
-            detailToolbar.setTitle(title);
+            //detailToolbar.setTitle(title);
+            //detailToolbar.setSubtitle(author);
             detailToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
             detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    onBackPressed();
                 }
             });
         }
 
-        titleView.setText(title);
-        bylineView.setText(author);
+        //titleView.setText(title);
+        //bylineView.setText(author);
         Picasso.get().load(photo)
                 .into(mPhotoView, new Callback() {
                     @Override

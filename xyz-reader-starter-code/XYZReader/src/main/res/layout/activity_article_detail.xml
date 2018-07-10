@@ -36,6 +36,16 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/photo_background_protection"/>
 
+            </FrameLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/article_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_collapseMode="pin">
+
                 <LinearLayout
                     android:id="@+id/meta_bar"
                     android:layout_width="match_parent"
@@ -56,21 +66,13 @@
                     <TextView
                         android:id="@+id/article_byline"
                         style="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="?android:textColorSecondary" />
 
                 </LinearLayout>
 
-            </FrameLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/article_detail_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin"/>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
