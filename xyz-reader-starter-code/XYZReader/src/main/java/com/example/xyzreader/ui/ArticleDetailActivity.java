@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.example.xyzreader.listener.GiantTextListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -37,9 +40,6 @@ import static com.example.xyzreader.utils.Utils.*;
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
 public class ArticleDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private Cursor mCursor;
-    private long mStartId;
-
     @BindView(R.id.nestedScrollView)
     NestedScrollView mScrollView;
     @BindView(R.id.article_image_container)
@@ -65,6 +65,19 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
 
     private int mCurrentPosition;
     private String mCurrentImageTransitionName;
+
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch(msg.what) {
+                case LONG_TEXT:
+                    bodyView.setText(msg.obj.toString());
+                    bodyView.setVisibility(View.VISIBLE);
+                    loadingBody.setVisibility(View.GONE);
+                    break;
+            }
+        }
+    };
 
 
     @Override
@@ -93,7 +106,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(ARTICLE_ID, mStartId);
         outState.putInt(CURRENT_ARTICLE_POSITION, mCurrentPosition);
     }
 
@@ -129,16 +141,37 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                         + " by "
                         + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
 
-        new AsyncTask<Void, Void, Void>() {
+        /*final AsyncTask<Void, Void, Void> gettingBody = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
-                bodyView.setText(body);
-                bodyView.setVisibility(View.VISIBLE);
-                loadingBody.setVisibility(View.GONE);
+                //String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
+                final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")).toString();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        bodyView.setText(body);
+                        bodyView.setVisibility(View.VISIBLE);
+                        loadingBody.setVisibility(View.GONE);
+                    }
+                });
+
+                //bodyView.setText(Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+                //bodyView.setVisibility(View.VISIBLE);
+                //loadingBody.setVisibility(View.GONE);
                 return null;
             }
-        }.execute();
+        };
+
+        gettingBody.execute();*/
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")).toString();
+                mHandler.sendMessage(mHandler.obtainMessage(LONG_TEXT, body));
+            }
+        });
+        thread.start();
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
@@ -149,6 +182,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
             detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //gettingBody.cancel(true);
                     onBackPressed();
                 }
             });
@@ -186,7 +220,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mCursor = null;
     }
 }
 

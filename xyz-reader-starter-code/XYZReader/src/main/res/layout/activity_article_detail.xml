@@ -106,7 +106,8 @@
                 android:textColor="?android:textColorPrimary"
                 android:autoLink="web"
                 android:linksClickable="true"
-                android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
+                android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
+                android:fontFamily="@font/rosarioregular"/>
 
         </FrameLayout>
 
