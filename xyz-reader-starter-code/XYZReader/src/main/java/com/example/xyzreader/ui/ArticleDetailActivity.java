@@ -112,19 +112,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, final Cursor cursor) {
-        // Select the start ID
-        /*if (mStartId > 0) {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                if (cursor.getLong(ArticleLoader.Query._ID) == mStartId) {
-                    final int position = cursor.getPosition();
-                    mCursor = cursor;
-                    break;
-                }
-                cursor.moveToNext();
-            }
 
-        }*/
         if(cursor == null || cursor.isClosed() || !cursor.moveToFirst()) {
             return;
         }
@@ -179,15 +167,18 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                     public void onError(Exception e) {
                         supportStartPostponedEnterTransition();
                     }
-                });;
+                });
 
+        //final Activity activity = this;
         mShareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from((Activity) getApplicationContext())
+                String shareString = getString(R.string.action_share);
+
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(ArticleDetailActivity.this)
                         .setType("text/plain")
-                        .setText(getString(R.string.action_share))
-                        .getIntent(), getString(R.string.action_share)));
+                        .setText(shareString)
+                        .getIntent(), shareString));
             }
         });
 
