@@ -44,8 +44,6 @@ import static com.example.xyzreader.utils.Utils.*;
 public class ArticleDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     @BindView(R.id.nestedScrollView)
     NestedScrollView mScrollView;
-    //@BindView(R.id.article_image_container)
-    //View mPhotoContainerView;
     @BindView(R.id.thumbnail)
     ImageView mPhotoView;
     @Nullable
@@ -55,8 +53,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     FloatingActionButton mShareFab;
     @BindView(R.id.article_title)
     TextView titleView;
-    @BindView(R.id.article_byline)
-    TextView bylineView;
+    @BindView(R.id.article_subtitle)
+    TextView subtitleView;
     @BindView(R.id.article_detail_toolbar)
     Toolbar detailToolbar;
     @BindView(R.id.article_body)
@@ -163,8 +161,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
         if(detailToolbar != null){
-            detailToolbar.setTitle(title);
-            detailToolbar.setSubtitle(author);
             detailToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
             detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -175,7 +171,10 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         }
 
         titleView.setText(title);
-        bylineView.setText(author);
+        titleView.setTextColor(mutedColor);
+        subtitleView.setText(author);
+        subtitleView.setTextColor(mutedColor);
+
         Picasso.get().load(photo)
                 .into(mPhotoView, new Callback() {
                     @Override

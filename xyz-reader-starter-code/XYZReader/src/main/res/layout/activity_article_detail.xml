@@ -18,7 +18,9 @@
             app:contentScrim="?colorPrimaryDark"
             app:expandedTitleMarginEnd="@dimen/collapsing_toolbar_title_margin_end"
             app:expandedTitleMarginStart="@dimen/collapsing_toolbar_title_margin_start"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:textColor="@color/color_gray"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@style/Toolbar.TitleText">
 
             <ImageView
                 android:id="@+id/thumbnail"
@@ -36,35 +38,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:layout_collapseMode="pin">
-
-                <LinearLayout
-                    android:id="@+id/meta_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/linear_bar_padding"
-                    android:layout_marginBottom="@dimen/linear_bar_padding">
-
-                    <TextView
-                        android:id="@+id/article_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-                        android:textColor="@color/color_gray"
-                        android:textStyle="bold"
-                        android:lineSpacingMultiplier="0.9"/>
-
-                    <TextView
-                        android:id="@+id/article_byline"
-                        style="?android:attr/textAppearanceSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="?android:textColorSecondary" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.Toolbar>
+                app:layout_collapseMode="pin" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -76,34 +50,61 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:id="@+id/details_text_container"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin">
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/text_margin"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/body_progress_bar"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/progressBarMargin"/>
             <TextView
-                android:id="@+id/article_body"
-                style="?android:attr/textAppearanceMedium"
-                android:layout_width="match_parent"
+                android:id="@+id/article_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorLink="?colorAccent"
-                android:layout_margin="@dimen/detail_content_text"
-                android:paddingTop="@dimen/detail_vertical_margin"
-                android:paddingBottom="@dimen/detail_vertical_margin"
-                android:textColor="?android:textColorPrimary"
-                android:autoLink="web"
-                android:linksClickable="true"
-                android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
-                android:fontFamily="@font/rosarioregular"/>
+                android:fontFamily="@font/rosarioregular"
+                android:textSize="@dimen/headline5"
+                android:textColor="?android:colorPrimary"
+                android:layout_marginStart="@dimen/detail_content_text"
+                android:layout_marginBottom="4dp"/>
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/article_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rosarioregular"
+                android:textSize="@dimen/card_view_subtitle1"
+                android:textColor="?android:colorPrimary"
+                android:layout_marginStart="@dimen/detail_content_text"
+                android:layout_marginBottom="4dp"/>
+
+            <FrameLayout
+                android:id="@+id/details_text_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/body_progress_bar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/progressBarMargin"/>
+                <TextView
+                    android:id="@+id/article_body"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorLink="?colorAccent"
+                    android:layout_margin="@dimen/detail_content_text"
+                    android:paddingTop="@dimen/detail_vertical_margin"
+                    android:paddingBottom="@dimen/detail_vertical_margin"
+                    android:textColor="?android:textColorPrimary"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
+                    android:fontFamily="@font/rosarioregular"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
