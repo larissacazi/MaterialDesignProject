@@ -81,6 +81,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
                 //        ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                 Intent intent = new Intent(mContext, ArticleDetailActivity.class);
                 intent.putExtra(Utils.CURRENT_ARTICLE_POSITION, position);
+                intent.putExtra(Utils.MUTED_COLOR_VALUE, vh.mutedColor);
                 intent.putExtra(Utils.CURRENT_ARTICLE_TRANSITION_NAME, vh.thumbnailView.getTransitionName());
                 mContext.startActivity(intent, activityOptionsCompat.toBundle());
             }
@@ -139,6 +140,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
                 if(bitmap != null) {
                     Palette p = Palette.from(bitmap).generate();
                     int mMutedColor = p.getDarkVibrantColor(Utils.DEFAULT_COLOR);
+                    holder.mutedColor = mMutedColor;
                     holder.itemView.setBackgroundColor(mMutedColor);
                     holder.thumbnailView.setBackgroundColor(mMutedColor);
                 }
@@ -164,6 +166,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         @BindView(R.id.article_author) TextView authorView;
         @BindView(R.id.card_view) CardView cardView;
         Bitmap bitmap = null;
+        int mutedColor;
 
         public ArticleViewHolder(View view) {
             super(view);

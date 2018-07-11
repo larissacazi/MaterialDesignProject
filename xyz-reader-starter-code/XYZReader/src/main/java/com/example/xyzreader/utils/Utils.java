@@ -13,4 +13,5 @@ public class Utils {
 
     public static final String BITMAP_IMAGE = "BITMAP_IMAGE";
     public static final int LONG_TEXT = 1;
+    public static final String MUTED_COLOR_VALUE = "MUTED_COLOR_VALUE";
 }

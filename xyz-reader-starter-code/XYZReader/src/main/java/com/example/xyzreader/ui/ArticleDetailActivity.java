@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
-import com.example.xyzreader.listener.GiantTextListener;
+import com.example.xyzreader.utils.Utils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -42,8 +43,8 @@ import static com.example.xyzreader.utils.Utils.*;
 public class ArticleDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     @BindView(R.id.nestedScrollView)
     NestedScrollView mScrollView;
-    @BindView(R.id.article_image_container)
-    View mPhotoContainerView;
+    //@BindView(R.id.article_image_container)
+    //View mPhotoContainerView;
     @BindView(R.id.thumbnail)
     ImageView mPhotoView;
     @Nullable
@@ -61,10 +62,13 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     TextView bodyView;
     @BindView(R.id.body_progress_bar)
     ProgressBar loadingBody;
+    @BindView(R.id.collapising_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
 
     private int mCurrentPosition;
     private String mCurrentImageTransitionName;
+    private int mutedColor;
 
 
     private Handler mHandler = new Handler() {
@@ -95,12 +99,14 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         if(intent.hasExtra(CURRENT_ARTICLE_POSITION)) {
             mCurrentPosition = intent.getIntExtra(CURRENT_ARTICLE_POSITION, 0);
             mCurrentImageTransitionName = intent.getStringExtra(CURRENT_ARTICLE_TRANSITION_NAME);
+            mutedColor = intent.getIntExtra(MUTED_COLOR_VALUE, MUTED_COLOR);
         }
         else finish();
 
         mPhotoView.setTransitionName(mCurrentImageTransitionName);
         loadingBody.setVisibility(View.VISIBLE);
         bodyView.setVisibility(View.GONE);
+        collapsingToolbarLayout.setContentScrimColor(mutedColor);
     }
 
     @Override
@@ -141,29 +147,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
                         + " by "
                         + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
 
-        /*final AsyncTask<Void, Void, Void> gettingBody = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                //String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
-                final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")).toString();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        bodyView.setText(body);
-                        bodyView.setVisibility(View.VISIBLE);
-                        loadingBody.setVisibility(View.GONE);
-                    }
-                });
-
-                //bodyView.setText(Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
-                //bodyView.setVisibility(View.VISIBLE);
-                //loadingBody.setVisibility(View.GONE);
-                return null;
-            }
-        };
-
-        gettingBody.execute();*/
-
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -176,20 +159,19 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
         if(detailToolbar != null){
-            //detailToolbar.setTitle(title);
-            //detailToolbar.setSubtitle(author);
+            detailToolbar.setTitle(title);
+            detailToolbar.setSubtitle(author);
             detailToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
             detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //gettingBody.cancel(true);
                     onBackPressed();
                 }
             });
         }
 
-        //titleView.setText(title);
-        //bylineView.setText(author);
+        titleView.setText(title);
+        bylineView.setText(author);
         Picasso.get().load(photo)
                 .into(mPhotoView, new Callback() {
                     @Override

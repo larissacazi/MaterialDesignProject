@@ -15,28 +15,20 @@
             android:id="@+id/collapising_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:contentScrim="?colorPrimaryDark"
             app:expandedTitleMarginEnd="@dimen/collapsing_toolbar_title_margin_end"
             app:expandedTitleMarginStart="@dimen/collapsing_toolbar_title_margin_start"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <FrameLayout
-                android:id="@+id/article_image_container"
+            <ImageView
+                android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/thumbnail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:fitsSystemWindows="true"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/photo_background_protection"/>
-
-            </FrameLayout>
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                android:adjustViewBounds="true"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/article_detail_toolbar"
@@ -87,7 +79,8 @@
         <FrameLayout
             android:id="@+id/details_text_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin">
 
             <ProgressBar
                 android:id="@+id/body_progress_bar"
@@ -103,6 +96,7 @@
                 android:textColorLink="?colorAccent"
                 android:layout_margin="@dimen/detail_content_text"
                 android:paddingTop="@dimen/detail_vertical_margin"
+                android:paddingBottom="@dimen/detail_vertical_margin"
                 android:textColor="?android:textColorPrimary"
                 android:autoLink="web"
                 android:linksClickable="true"

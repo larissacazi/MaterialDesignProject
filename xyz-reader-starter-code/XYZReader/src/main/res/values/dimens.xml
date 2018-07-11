@@ -2,7 +2,7 @@
     <!-- detail -->
     <dimen name="detail_title_text_size">24sp</dimen>
     <dimen name="detail_body_text_size">16sp</dimen>
-    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">0.5</item>
+    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.0</item>
 
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
@@ -54,6 +54,7 @@
     <dimen name="detail_content_text">16dp</dimen>
     <dimen name="detail_vertical_margin">16dp</dimen>
     <dimen name="progressBarMargin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
     <integer name="fragment_details_background_image_fade_millis">1000</integer>
 </resources>
