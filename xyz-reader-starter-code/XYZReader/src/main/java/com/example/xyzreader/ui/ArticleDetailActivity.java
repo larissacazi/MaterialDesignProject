@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -107,6 +108,9 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         loadingBody.setVisibility(View.VISIBLE);
         bodyView.setVisibility(View.GONE);
         collapsingToolbarLayout.setContentScrimColor(mutedColor);
+
+        Window window = getWindow();
+        window.setStatusBarColor(mutedColor);
     }
 
     @Override
