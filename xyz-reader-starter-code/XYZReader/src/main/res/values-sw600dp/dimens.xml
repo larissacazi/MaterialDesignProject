@@ -2,9 +2,9 @@
     <!-- detail -->
     <dimen name="detail_title_text_size">24sp</dimen>
     <dimen name="detail_body_text_size">16sp</dimen>
-    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">0.5</item>
+    <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.0</item>
 
-    <dimen name="fab_elevation">2dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
 
@@ -22,7 +22,39 @@
     <dimen name="appBarSize">128dp</dimen>
     <dimen name="appBarStarMargin">16dp</dimen>
     <dimen name="appBarBottomMargin">16dp</dimen>
+    <dimen name="image_margin">4dp</dimen>
+    <dimen name="appBarElevation">4dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbarSize">64dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="recyclerView_padding">4dp</dimen>
+    <dimen name="recyclerView_top_padding">110dp</dimen>
+    <dimen name="recylcerView_bottom_margin">28dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+
+    <!-- Image View -->
+    <dimen name="image_view_height">100dp</dimen>
+
+    <!-- Title -->
+    <dimen name="title_top_margin">16dp</dimen>
+    <dimen name="title_bottom_margin">16dp</dimen>
+    <dimen name="title_start_margin">16dp</dimen>
+    <dimen name="title_end_margin">16dp</dimen>
+
+    <!-- Articles's details -->
+    <dimen name="appBarLayout_image_height">340dp</dimen>
+    <dimen name="collapsing_toolbar_title_margin_end">64dp</dimen>
+    <dimen name="collapsing_toolbar_title_margin_start">48dp</dimen>
+    <dimen name="linear_bar_padding">16dp</dimen>
+    <dimen name="detail_content_text">16dp</dimen>
+    <dimen name="detail_vertical_margin">16dp</dimen>
+    <dimen name="progressBarMargin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <integer name="fragment_details_background_image_fade_millis">1000</integer>
 </resources>

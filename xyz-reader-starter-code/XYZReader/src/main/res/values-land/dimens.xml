@@ -57,4 +57,5 @@
     <dimen name="text_margin">16dp</dimen>
 
     <integer name="fragment_details_background_image_fade_millis">1000</integer>
+    <integer name="list_column_count">2</integer>
 </resources>
